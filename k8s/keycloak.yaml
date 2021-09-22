@@ -2,13 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: keycloak
+  namespace: keycloak
   labels:
     app: keycloak
 spec:
   ports:
   - name: http
-    port: 8080
-    targetPort: 8080
+    port: 8084
+    targetPort: 8084
   selector:
     app: keycloak
   type: LoadBalancer
@@ -17,7 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: keycloak
-  namespace: default
+  namespace: keycloak
   labels:
     app: keycloak
 spec:
@@ -42,9 +43,9 @@ spec:
           value: "true"
         ports:
         - name: http
-          containerPort: 8080
+          containerPort: 8084
         - name: https
-          containerPort: 8443
+          containerPort: 84443
         readinessProbe:
           httpGet:
             path: /auth/realms/master
